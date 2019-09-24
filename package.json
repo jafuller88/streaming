@@ -1,0 +1,31 @@
+{
+  "name": "streaming",
+  "version": "1.0.0",
+  "description": "Video Streaming demo with HTML5 and hls.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Video",
+    "Streaming",
+    "HTML5"
+  ],
+  "author": "James Fuller",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/hls.js": "^0.12.5",
+    "browserify": "^16.5.0",
+    "gulp": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-typescript": "^5.0.1",
+    "gulp-uglify": "^3.0.2",
+    "tsify": "^4.0.1",
+    "typescript": "^3.6.3",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  },
+  "dependencies": {
+    "hls.js": "^0.12.4"
+  }
+}
