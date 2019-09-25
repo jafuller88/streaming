@@ -12,7 +12,7 @@
 ### The Zoopraxiscope
 
 - A primitive version of later motion picture devices which worked by showing a sequence of still photographs in rapid succession, providing a sense of motion. 
-- Invented by British photographer Eadweard Muybridge (1879)
+- Invented by British photographer Eadweard Muybridge (1879).
 
 <div>
 <img src="./img/history/Zoopraxiscope_16485u.jpg" width="500" height="500" />
@@ -35,11 +35,11 @@
 <ins>Resolution, aspect ratio, and frames per second (fps)</ins>
 
 Resolution 
-- more pixels in a given field means a higher density of information
-- having 1920x1080 pixels is better because it displays more information in comparison to 1920x720
+- more pixels in a given field means a higher density of information.
+- having 1920x1080 pixels is better because it displays more information in comparison to 1920x720.
 
 Aspect ratio 
-- The relation between your displayed pixel height and width
+- The relation between your displayed pixel height and width.
 
 16:9 
 - 1280x720 
@@ -63,17 +63,17 @@ $ ffmpeg -i img/gif/got.gif img/gif/got%02d.png
 8 / 1.6s = 5fps
 
 24fps
-- This is the standard for movies and TV shows, and it was determined to be the minimum speed needed to capture video while still maintaining realistic motion
-- Even if a film is shot at a higher frame rate, it’s often produced and displayed at 24fps
+- This is the standard for movies and TV shows, and it was determined to be the minimum speed needed to capture video while still maintaining realistic motion.
+- Even if a film is shot at a higher frame rate, it’s often produced and displayed at 24fps.
 
 30+fps
-- Videos with a lot of motion, such as sports, will often benefit from the extra frames per second
+- Videos with a lot of motion, such as sports, will often benefit from the extra frames per second.
 
 ## Video Encoding and Transcoding
 <ins>Compression</ins>
-- A Video Codec is software based on an algorithm that allows for compression or decompression of digital video
-- Video compression is the process of encoding a video file in such a way that it consumes less space than the original file and is easier to transmit over the network
-- H.264 is a digital video compression standard that uses half the space of MPEG-2 (the DVD standard) to deliver the same quality video
+- A Video Codec is software based on an algorithm that allows for compression or decompression of digital video.
+- Video compression is the process of encoding a video file in such a way that it consumes less space than the original file and is easier to transmit over the network.
+- H.264 is a digital video compression standard that uses half the space of MPEG-2 (the DVD standard) to deliver the same quality video.
 
 <ins>Group Of Pictures (GOP) and Key Frames</ins>
 
@@ -92,8 +92,8 @@ cameras.
 
 - HTTP Live Streaming is a HTTP-based ABR communications protocol. Originally implemented by Apple as part of its QuickTime, Safari, OS X, and iOS software.
 - HLS works by breaking the overall stream into a sequence of small segments. 
-- A list of available streams, encoded at different bit rates, is sent to the client using an M3U8 playlist
-- Wowza is an example software based off the shelf solution for segmenting and packaging HLS video and audio. It will also act as a the origin webserver to deliver the content over HTTP
+- A list of available streams, encoded at different bit rates, is sent to the client using an M3U8 playlist.
+- Wowza is an example software based off the shelf solution for segmenting and packaging HLS video and audio. It will also act as a the origin webserver to deliver the content over HTTP.
 
 ### ffmpeg
 Written in C - open source
@@ -141,25 +141,25 @@ $ ffmpeg -i video/got.mp4 -c:v libx264 -preset veryfast -c:a aac -b:a 128k -g 24
 ```
 -preset veryfast Encoding speed to compression ratio. A slower preset will provide better compression (compression is quality per filesize).
 
--c:v libx264 Encode Video using x264
+-c:v libx264 Encode Video using x264.
 
--c:a aac Encode Audio as AAC
+-c:a aac Encode Audio as AAC.
 
--b:a 128k The Audio Bitrate
+-b:a 128k The Audio Bitrate.
 
 -g 24 Sets the group size to 24. The video source has 24 FPS. So each second will start with a new picture group. This option forces a target size of 24 frames. After that a new group will be created (starting with a new I-Frame).
 
 -sc_threshold 0 FFmpeg has a scene detection. This means that when a new scene starts an I-Frame will be set. Since it’s FFmpeg we can easily disable this feature.
 
--f hls Output Format HLS
+-f hls Output Format HLS.
 
--hls_time Target duration for each segment
+-hls_time Target duration for each segment.
 
--hls_playlist_type vod Video On Demand
+-hls_playlist_type vod Video On Demand.
 
 
 ### Adaptive Bitrate Streamning (ABR)
-Transcode to different bitrates
+Transcode to different bitrates.
 ```
 ffmpeg -i video/got.mp4 \
     -preset veryfast -g 24 -sc_threshold 0 \
