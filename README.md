@@ -32,19 +32,6 @@
 
 <img src="./img/gif/got.gif" width="500" height="281" />
 
-<ins>Resolution, aspect ratio, and frames per second (fps)</ins>
-
-Resolution 
-- more pixels in a given field means a higher density of information.
-- having 1920x1080 pixels is better because it displays more information in comparison to 1920x720.
-
-Aspect ratio 
-- The relation between your displayed pixel height and width.
-
-16:9 
-- 1280x720 
-- 1920x1080
-
 FPS
 
 <img src="./img/frame-rate-visual.png" width="768" height="211" />
@@ -88,33 +75,22 @@ cameras.
 - The main benefit of using higher GOP length is to minimize bandwidth consumption and minimize storage space consumption (reduce bitrate) under same frame rate. 
 - Transcoding is taking already-compressed (or encoded) content; decompressing (decoding) it; and then altering and recompressing it.
 
-## Packaging Video for HTTP Live Streaming (HLS)
+## Encoding and Packaging Video for HTTP Live Streaming (HLS)
 
-- HTTP Live Streaming is a HTTP-based ABR communications protocol. Originally implemented by Apple as part of its QuickTime, Safari, OS X, and iOS software.
+- HTTP Live Streaming is a HTTP-based communications protocol. Originally implemented by Apple as part of its QuickTime, Safari, OS X, and iOS software.
 - HLS works by breaking the overall stream into a sequence of small segments. 
 - A list of available streams, encoded at different bit rates, is sent to the client using an M3U8 playlist.
+- Adaptive Bitrate Streaming (ABR)
 - Wowza is an example software based off the shelf solution for segmenting and packaging HLS video and audio. It will also act as a the origin webserver to deliver the content over HTTP.
 
 ### ffmpeg
-Written in C - open source
-https://github.com/FFmpeg/FFmpeg
+Written in C - open source https://github.com/FFmpeg/FFmpeg
+
 https://ffmpeg.org/download.html
 
 Install static version
-```
-$ wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
-$ tar -xvf ffmpeg-release-amd64-static.tar.xz 
-$ sudo mv ffmpeg-4.2.1-amd64-static/ /usr/local/ffmpeg/
-$ cd /usr/local/ffmpeg/ffmpeg-4.2.1-amd64-static/
-$ ./ffmpeg -h
-$ ./ffmpeg -formats
-```
-Add to Path
-```
-$ vi ~/.profile
-export PATH=$PATH:/usr/local/ffmpeg/ffmpeg-4.2.1-amd64-static/
-$ source ~/.profile
-```
+
+https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
 
 ### Examples
 Convert from 1 container format to another
@@ -136,29 +112,6 @@ $ ffprobe -i video/got.mp4
 ```
 
 ### ffmpeg to stream hls
-```
-$ ffmpeg -i video/got.mp4 -c:v libx264 -preset veryfast -c:a aac -b:a 128k -g 24 -sc_threshold 0 -f hls -hls_time 5 -hls_playlist_type vod ./dist/video/stream.m3u8
-```
--preset veryfast Encoding speed to compression ratio. A slower preset will provide better compression (compression is quality per filesize).
-
--c:v libx264 Encode Video using x264.
-
--c:a aac Encode Audio as AAC.
-
--b:a 128k The Audio Bitrate.
-
--g 24 Sets the group size to 24. The video source has 24 FPS. So each second will start with a new picture group. This option forces a target size of 24 frames. After that a new group will be created (starting with a new I-Frame).
-
--sc_threshold 0 FFmpeg has a scene detection. This means that when a new scene starts an I-Frame will be set. Since it’s FFmpeg we can easily disable this feature.
-
--f hls Output Format HLS.
-
--hls_time Target duration for each segment.
-
--hls_playlist_type vod Video On Demand.
-
-
-### Adaptive Bitrate Streamning (ABR)
 Transcode to different bitrates.
 ```
 ffmpeg -i video/got.mp4 \
@@ -171,6 +124,23 @@ ffmpeg -i video/got.mp4 \
     -var_stream_map "v:0,a:0 v:1,a:1" ./dist/video/stream_%v.m3u8
 ```
 
+-c:v libx264 Encode Video using x264.
+
+-c:a aac Encode Audio as AAC.
+
+-b:v The Video Bitrate.
+
+-b:a 128k The Audio Bitrate.
+
+-g 24 Sets the group size to 24. The video source has 24 FPS. So each second will start with a new picture group. This option forces a target size of 24 frames. After that a new group will be created (starting with a new I-Frame).
+
+-f hls Output Format HLS.
+
+-hls_time Target duration for each segment.
+
+-hls_playlist_type vod Video On Demand.
+
+
 ## Playing Video Streams with HTML5 and hls.js
 ### hls.js
 https://github.com/video-dev/hls.js
@@ -178,49 +148,13 @@ https://github.com/video-dev/hls.js/blob/master/docs/API.md
 https://www.npmjs.com/package/hls.js
 
 ### Setup
-For this demo Typescript and the [Gulp](https://gulpjs.com/) build system has been used. To setup:
+For this demo Typescript and the [Gulp](https://gulpjs.com/) build system has been used.
 
-```
-$ npm init
-$ tsc --init
-$ sudo chown -R 1000:1000 "/home/<user>/.npm"
-$ npm install --save-dev typescript gulp gulp-typescript
-$ npm install --save hls.js
-$ npm install --save-dev @types/hls.js
-$ npm install --save-dev browserify tsify vinyl-source-stream
-$ npm install --save-dev gulp-uglify vinyl-buffer gulp-sourcemaps
-```
-
-Now build and deploy
+Build and deploy
 ```
 $ gulp
 $ gulp copy-html
 $ sudo ./deploy.bat
-```
-
-### NGINX
-Install NGINX
-```
-$ sudo apt update
-$ sudo apt install nginx
-$ systemctl status nginx
-$ systemctl start nginx
-$ curl http://localhost
-$ ls /var/www/html/
-```
-Copy the nginx.conf and sites-available/streaming files to the nginx location
-```
-$ sudo cp ./nginx/nginx.conf /etc/nginx/
-$ sudo cp ./nginx/sites-available/streaming /etc/nginx/sites-available/
-```
-Setup SymLink
-```
-$ ln -s /etc/nginx/sites-available/streaming /etc/nginx/sites-enabled/
-``` 
-Restart Nginx
-```
-$ systemctl stop nginx
-$ systemctl start nginx
 ```
 
 ## Latency concerns
