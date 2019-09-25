@@ -172,6 +172,10 @@ ffmpeg -i video/got.mp4 \
 ```
 
 ## Playing Video Streams with HTML5 and hls.js
+### hls.js
+https://github.com/video-dev/hls.js
+https://github.com/video-dev/hls.js/blob/master/docs/API.md
+https://www.npmjs.com/package/hls.js
 
 ### Setup
 For this demo Typescript and the [Gulp](https://gulpjs.com/) build system has been used. To setup:
