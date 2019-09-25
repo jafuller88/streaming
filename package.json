@@ -20,6 +20,7 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-typescript": "^5.0.1",
     "gulp-uglify": "^3.0.2",
+    "hls.js": "^0.12.4",
     "tsify": "^4.0.1",
     "typescript": "^3.6.3",
     "vinyl-buffer": "^1.0.1",
@@ -27,5 +28,13 @@
   },
   "dependencies": {
     "hls.js": "^0.12.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jafuller88/streaming.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jafuller88/streaming/issues"
+  },
+  "homepage": "https://github.com/jafuller88/streaming#readme"
 }
