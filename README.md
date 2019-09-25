@@ -91,9 +91,9 @@ cameras.
 ## Packaging Video for HTTP Live Streaming (HLS)
 
 - HTTP Live Streaming is a HTTP-based ABR communications protocol. Originally implemented by Apple as part of its QuickTime, Safari, OS X, and iOS software.
-- HLS works by breaking the overall stream into a sequence of small chunks. 
+- HLS works by breaking the overall stream into a sequence of small segments. 
 - A list of available streams, encoded at different bit rates, is sent to the client using an M3U8 playlist
-- Wowza is an example software based off the shelf solution for segmenting and packaging HLS video and audio. It will also act as a the origin webserver to delivery the content over HTTP
+- Wowza is an example software based off the shelf solution for segmenting and packaging HLS video and audio. It will also act as a the origin webserver to deliver the content over HTTP
 
 ### ffmpeg
 Written in C - open source
@@ -119,12 +119,12 @@ $ source ~/.profile
 ### Examples
 Convert from 1 container format to another
 ```
-$ ffmpeg -i BigBuckBunny.mp4 -vcodec copy Big.avi
-$ ffmpeg -i BigBuckBunny.mp4 -b:v 1000k Big.avi
+$ ffmpeg -i BigBuckBunny.mp4 -vcodec copy BigBuckBunny.avi
+$ ffmpeg -i BigBuckBunny.mp4 -b:v 1000k BigBuckBunny.avi
 ```
 Clip part of a video
 ```
-$ ffmpeg -ss 00:15:40 -i Game.of.Thrones.S08E01.1080p.mkv -ss 00:01:00 -t 00:00:30 -map 0:0 -map 0:2 got.mp4
+$ ffmpeg -ss 00:15:40 -i got.mkv -ss 00:01:00 -t 00:00:30 -map 0:0 -map 0:2 got.mp4
 ```
 Extract frames from video
 ```
@@ -132,7 +132,7 @@ $ ffmpeg -i got.mp4 got%02d.png
 ```
 Show details about the Container
 ```
-$ ffprobe video/got.mp4 
+$ ffprobe -i video/got.mp4 
 ```
 
 ### ffmpeg to stream hls
